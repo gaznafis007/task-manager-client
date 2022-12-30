@@ -28,6 +28,24 @@ const NavBar = () => {
             </Link>
           </Nav.Link>
         </Nav>
+        <Nav className="justify-content-end">
+          <Nav.Link>
+            <Link
+              className="text-decoration-none btn btn-outline-primary"
+              to="/signup"
+            >
+              Sign up
+            </Link>
+          </Nav.Link>
+          <Nav.Link>
+            <Link
+              className="text-decoration-none btn btn-outline-success"
+              to="/login"
+            >
+              Login
+            </Link>
+          </Nav.Link>
+        </Nav>
       </Container>
     </Navbar>
   );
