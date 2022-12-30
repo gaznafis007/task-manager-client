@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const TasksTable = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
+  const [completed, setCompleted] = useState(false);
   const navigate = useNavigate();
   const [myTasks, setMyTasks] = useState([]);
   // const email = "sania@gmail.com";
@@ -15,6 +16,7 @@ const TasksTable = () => {
       .then((data) => {
         console.log(data);
         setMyTasks(data);
+        setLoading(false);
       });
   }, [user]);
   const handleComplete = (taskId) => {
@@ -27,9 +29,20 @@ const TasksTable = () => {
     })
       .then((res) => res.json())
       .then((data) => console.log(data));
+    setCompleted(true);
     navigate("/donetask");
   };
   if (!user?.uid) {
+    return (
+      <div className="text-center">
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+      </div>
+    );
+  }
+  if (loading) {
     return (
       <div className="text-center">
         <Spinner animation="grow" variant="success" />
@@ -60,13 +73,17 @@ const TasksTable = () => {
             <td>{myTask.taskDate}</td>
             <td>{myTask.status}</td>
             <td>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => handleComplete(myTask._id)}
-              >
-                Mark as Complete
-              </Button>
+              {completed ? (
+                <Button disabled>Completed</Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => handleComplete(myTask._id)}
+                >
+                  Mark as Complete
+                </Button>
+              )}
             </td>
           </tr>
         ))}

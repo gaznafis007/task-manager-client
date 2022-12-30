@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 
 const FormField = () => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const handleAddTask = (event) => {
     event.preventDefault();
@@ -29,6 +31,7 @@ const FormField = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        navigate("/myTask");
       });
   };
   return (
