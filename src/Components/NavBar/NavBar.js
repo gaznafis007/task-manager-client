@@ -1,8 +1,10 @@
-import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const NavBar = () => {
+  const { user, load, logOut } = useContext(AuthContext);
   return (
     <Navbar bg="light" variant="light">
       <Container>
@@ -29,22 +31,26 @@ const NavBar = () => {
           </Nav.Link>
         </Nav>
         <Nav className="justify-content-end">
-          <Nav.Link>
-            <Link
-              className="text-decoration-none btn btn-outline-primary"
-              to="/signup"
-            >
-              Sign up
-            </Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link
-              className="text-decoration-none btn btn-outline-success"
-              to="/login"
-            >
-              Login
-            </Link>
-          </Nav.Link>
+          {user?.uid ? (
+            <Nav.Link>
+              <Button onClick={logOut} className="btn">
+                Sign out
+              </Button>
+            </Nav.Link>
+          ) : (
+            <>
+              <Nav.Link>
+                <Link to="/signup" className="btn btn-outline-primary">
+                  Sign up
+                </Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/login" className="btn btn-outline-primary">
+                  Login
+                </Link>
+              </Nav.Link>
+            </>
+          )}
         </Nav>
       </Container>
     </Navbar>

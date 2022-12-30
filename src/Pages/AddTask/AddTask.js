@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import FormField from "../../Components/FormField";
+import { AuthContext } from "../../context/AuthProvider";
 
 const AddTask = () => {
   return (

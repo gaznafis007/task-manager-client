@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Spinner, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const TasksTable = () => {
+  const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [myTasks, setMyTasks] = useState([]);
-  const email = "sania@gmail.com";
+  // const email = "sania@gmail.com";
   //   const email = "halumVai@halum.com";
   useEffect(() => {
-    fetch(`http://localhost:5000/task?email=${email}`)
+    fetch(`http://localhost:5000/task?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setMyTasks(data);
       });
-  }, []);
+  }, [user]);
   const handleComplete = (taskId) => {
     fetch(`http://localhost:5000/task/${taskId}`, {
       method: "PUT",
@@ -27,6 +29,16 @@ const TasksTable = () => {
       .then((data) => console.log(data));
     navigate("/donetask");
   };
+  if (!user?.uid) {
+    return (
+      <div className="text-center">
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+      </div>
+    );
+  }
   return (
     <Table className="w-75 mx-auto" striped bordered size="lg">
       <thead>

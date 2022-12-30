@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Spinner, Table } from "react-bootstrap";
+import { AuthContext } from "../../context/AuthProvider";
 
 const CompletedTask = () => {
-  const email = "sania@gmail.com";
+  // const email = "sania@gmail.com";
+  const { user, loading } = useContext(AuthContext);
   const taskStatus = "Completed";
   const [completedTasks, setCompletedTasks] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/task?email=${email}&status=${taskStatus}`)
+    fetch(
+      `http://localhost:5000/task?email=${user?.email}&status=${taskStatus}`
+    )
       .then((res) => res.json())
       .then((data) => setCompletedTasks(data));
-  }, []);
+  }, [user]);
+  if (!user?.uid) {
+    return (
+      <div className="text-center">
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+      </div>
+    );
+  }
   return (
     <div>
       <h2 className="text-center my-4">Completed Tasks</h2>

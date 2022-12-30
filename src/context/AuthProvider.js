@@ -19,7 +19,10 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const getProfile = (userName, userPhoto) => {
-    return updateProfile(auth, { displayName: userName, photoURL: userPhoto });
+    return updateProfile(auth.currentUser, {
+      displayName: userName,
+      photoURL: userPhoto,
+    });
   };
   const login = (email, password) => {
     setLoading(true);

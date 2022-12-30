@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
+import { AuthContext } from "../context/AuthProvider";
 
 const FormField = () => {
+  const { user } = useContext(AuthContext);
   const handleAddTask = (event) => {
     event.preventDefault();
     const form = event.target;
-    const email = form.email.value;
+    const email = user.email;
     const task = form.taskName.value;
     const taskDescription = form.taskDescription.value;
     const taskDate = form.taskDate.value;
@@ -33,7 +35,13 @@ const FormField = () => {
     <Form onSubmit={handleAddTask}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email Address</Form.Label>
-        <Form.Control type="email" name="email" placeholder="Enter email" />
+        <Form.Control
+          type="email"
+          name="email"
+          value={user?.email}
+          disabled
+          placeholder="Enter email"
+        />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicTask">
         <Form.Label>Task Name</Form.Label>
