@@ -11,7 +11,9 @@ const TasksTable = () => {
   // const email = "sania@gmail.com";
   //   const email = "halumVai@halum.com";
   useEffect(() => {
-    fetch(`http://localhost:5000/task?email=${user?.email}`)
+    fetch(
+      `https://task-manager-server-chi.vercel.app/task?email=${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -20,7 +22,7 @@ const TasksTable = () => {
       });
   }, [user]);
   const handleComplete = (taskId) => {
-    fetch(`http://localhost:5000/task/${taskId}`, {
+    fetch(`https://task-manager-server-chi.vercel.app/task/${taskId}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

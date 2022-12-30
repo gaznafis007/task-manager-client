@@ -9,7 +9,7 @@ const CompletedTask = () => {
   const [completedTasks, setCompletedTasks] = useState([]);
   useEffect(() => {
     fetch(
-      `http://localhost:5000/task?email=${user?.email}&status=${taskStatus}`
+      `https://task-manager-server-chi.vercel.app/task?email=${user?.email}&status=${taskStatus}`
     )
       .then((res) => res.json())
       .then((data) => setCompletedTasks(data));

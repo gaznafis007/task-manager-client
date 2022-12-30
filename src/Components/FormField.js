@@ -21,7 +21,7 @@ const FormField = () => {
       status: "Incomplete",
     };
     console.log(assignTask);
-    fetch("http://localhost:5000/task", {
+    fetch("https://task-manager-server-chi.vercel.app/task", {
       method: "POST",
       headers: {
         "content-type": "application/json",
