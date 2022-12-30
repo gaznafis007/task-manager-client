@@ -11,6 +11,7 @@ const TasksTable = () => {
     fetch(`http://localhost:5000/task?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setMyTasks(data);
       });
   }, []);
