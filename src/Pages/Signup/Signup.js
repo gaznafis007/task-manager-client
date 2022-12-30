@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import register from "./registration-animation.json";
 import Lottie from "lottie-react";
+import { useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { signUp, getProfile } = useContext(AuthContext);
   const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -16,6 +20,23 @@ const Signup = () => {
       password,
     };
     console.log(user);
+    signUp(email, password)
+      .then((res) => {
+        let user = res.user;
+        console.log(res.user);
+        getProfile(name)
+          .then((res) => {
+            console.log(res.user);
+            user = res.user;
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   return (
     <Container>
